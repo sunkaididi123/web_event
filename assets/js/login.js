@@ -13,21 +13,21 @@ $(function() {
     var form = layui.form;
     // 通过form.verify()这个函数自定义校验规则
     form.verify({
-        pwd: [
-            /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
-        ],
-        repwd: function(value) {
-            // 通过形参拿到的是确认密码框的内容
-            // 还需要拿到密码框的内容
-            var pwdput = $('.reg-box [name=password]').val();
+            pwd: [
+                /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
+            ],
+            repwd: function(value) {
+                // 通过形参拿到的是确认密码框的内容
+                // 还需要拿到密码框的内容
+                var pwdput = $('.reg-box [name=password]').val();
 
-            // 然后进行一次等于的判断，如果判断失败则return一个提示消息
-            if (value !== pwdput) {
-                return '两次密码不一致!'
+                // 然后进行一次等于的判断，如果判断失败则return一个提示消息
+                if (value !== pwdput) {
+                    return '两次密码不一致!'
+                }
             }
-        }
-    })
-    var layer = layui.layer;
+        })
+        // var layer = layui.layer;
 
     // 监听注册表单的提交事件
     $('#form_reg').on('submit', (e) => {
@@ -40,6 +40,8 @@ $(function() {
             var data = { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() }
             $.post('/api/reguser', data, (res) => {
                 if (res.status !== 0) {
+                    console.log(res);
+
                     return layer.msg(res.message);
 
                 };
